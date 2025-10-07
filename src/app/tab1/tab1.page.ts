@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Place } from './place.model';
+import { PlaceService } from './place-service';
 
 @Component({
   selector: 'app-tab1',
@@ -7,7 +9,11 @@ import { Component } from '@angular/core';
   standalone: false,
 })
 export class Tab1Page {
-
-  constructor() {}
+  loadedPlaces: Place[];
+  constructor(private placeService: PlaceService) {}
+  ngOnInit() {
+    this.loadedPlaces = this.placeService.places;
+    console.log(this.loadedPlaces);
+  }
 
 }

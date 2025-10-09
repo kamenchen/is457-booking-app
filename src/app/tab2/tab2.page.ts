@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Place } from '../tab1/place.model';
+import { PlaceService } from '../tab1/place-service';
 
 @Component({
   selector: 'app-tab2',
@@ -7,7 +9,10 @@ import { Component } from '@angular/core';
   standalone: false,
 })
 export class Tab2Page {
+  offers: Place[];
+  constructor(private placeService: PlaceService) {}
 
-  constructor() {}
-
+  ionViewWillEnter(){
+    this.offers = this.placeService.places;
+  }
 }

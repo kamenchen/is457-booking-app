@@ -1,48 +1,57 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PlaceService } from 'src/app/tab1/place-service';
+import { Place } from 'src/app/tab1/place.model';
 
 @Component({
-  selector: 'app-newoffer',
-  templateUrl: './newoffer.page.html',
-  styleUrls: ['./newoffer.page.scss'],
+  selector: 'app-editoffer',
+  templateUrl: './editoffer.page.html',
+  styleUrls: ['./editoffer.page.scss'],
   standalone: false,
 })
-export class NewofferPage implements OnInit {
-  form: FormGroup
-  constructor(private placeService: PlaceService,
+export class EditofferPage implements OnInit {
+  id: string;
+  place: Place;
+  form: FormGroup;
+  constructor(private route: ActivatedRoute, private placeService: PlaceService,
     private router: Router) { }
 
   ngOnInit() {
-    //form to add new place
+    //retrieve data from place
+    this.id = this.route.snapshot.paramMap.get('placeId');
+    this.place = this.placeService.getPlace(this.id);
+    console.log(this.id);
+    console.log(this.place);
+    //edit form
     this.form = new FormGroup({
-      title: new FormControl(null, {
+      title: new FormControl(this.place.title, {
         updateOn: 'blur',
         validators: [Validators.required]
       }),
-      description: new FormControl(null, {
+      description: new FormControl(this.place.description, {
         updateOn: 'blur',
         validators: [Validators.required, Validators.maxLength(180)]
       }),
-      price: new FormControl(null, {
+      price: new FormControl(this.place.price, {
         updateOn: 'blur',
         validators: [Validators.required, Validators.min(1)]
       }),
-      availableFrom: new FormControl(null, {
+      availableFrom: new FormControl(this.place.availableFrom.toISOString(), {
         updateOn: 'blur',
         validators: [Validators.required]
       }),
-      availableTo: new FormControl(null, {
+      availableTo: new FormControl(this.place.availableTo.toISOString(), {
         updateOn: 'blur',
         validators: [Validators.required]
       }),
     });
   }
-  onCreateOffer() {
-    //adds data from form into page
+  onEditOffer() {
+    //add edits to page
     console.log(this.form);
-    this.placeService.addPlace(
+    this.placeService.updateOffer(
+      this.id,
       this.form.value.title,
       this.form.value.description,
       this.form.value.price,

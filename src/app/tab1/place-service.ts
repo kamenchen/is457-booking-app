@@ -40,6 +40,7 @@ export class PlaceService {
   getPlace(id: string) {
     return {...this._places.find(p => p.id === id)};
   }
+  //add data to page
   addPlace(title: string, description: string, price: number, dateFrom: Date, dateTo: Date) {
     const newPlace = new Place(
       Math.random().toString(),
@@ -51,6 +52,23 @@ export class PlaceService {
       dateTo,
     );
     this._places.push(newPlace);
+  }
+  //update data on page
+  updateOffer(placeId: string, title: string, description: string, price: number, dateFrom: Date, dateTo: Date) {
+    //find element to update
+    const updatedPlaceIndex = this._places.findIndex(p1 => p1.id === placeId);
+    //remember all old attributes
+    const oldPlace = this._places[updatedPlaceIndex];
+    //define all attributes to update
+    this._places[updatedPlaceIndex] = new Place(
+      oldPlace.id,
+      title,
+      description,
+      oldPlace.image,
+      price,
+      dateFrom,
+      dateTo,
+    );
   }
   constructor() {}
 }

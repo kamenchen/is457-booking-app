@@ -70,5 +70,9 @@ export class PlaceService {
       dateTo,
     );
   }
+  removeOffer(id: string) {
+    const position = this._places.findIndex(p1 => p1.id === id);
+    this._places.splice(position,1);
+  }
   constructor() {}
 }

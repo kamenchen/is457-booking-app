@@ -13,7 +13,8 @@ export class PlaceService {
       '../assets/imgs/nyc.jpg',
       149.99,
       new Date('2025-01-01'),
-      new Date('2025-12-31')
+      new Date('2025-12-31'),
+      'u1'
     ),
     new Place(
       'p2',
@@ -22,7 +23,8 @@ export class PlaceService {
       '../assets/imgs/paris.jpg',
       189.99,
       new Date('2025-01-01'),
-      new Date('2025-12-31')
+      new Date('2025-12-31'),
+      'u1'
     ),
     new Place(
       'p3',
@@ -31,7 +33,8 @@ export class PlaceService {
       '../assets/imgs/sanf.jpg',
       99.99,
       new Date('2025-01-01'),
-      new Date('2025-12-31')
+      new Date('2025-12-31'),
+      'u1'
     )
   ];
   get places() {
@@ -50,6 +53,7 @@ export class PlaceService {
       price,
       dateFrom,
       dateTo,
+      'u1'
     );
     this._places.push(newPlace);
   }
@@ -68,6 +72,7 @@ export class PlaceService {
       price,
       dateFrom,
       dateTo,
+      oldPlace.userId
     );
   }
   removeOffer(id: string) {

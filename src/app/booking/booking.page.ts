@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Booking } from './booking.model';
+import { BookingService } from './booking-service';
 
 @Component({
   selector: 'app-booking',
@@ -6,11 +8,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./booking.page.scss'],
   standalone: false,
 })
-export class BookingPage implements OnInit {
+export class BookingPage {
+  loadedBookings: Booking[];
+  constructor(private bookingService: BookingService) { }
 
-  constructor() { }
-
-  ngOnInit() {
+  //update page with new data input 
+  ionViewWillEnter() {
+    this.loadedBookings = this.bookingService.booking;
+    console.log(this.loadedBookings);
   }
-
+  //delete booked item
+  onRemoveBooking(bookingId: string) {
+    this.bookingService.removeBooking(bookingId);
+    this.loadedBookings = this.bookingService.booking;
+  }
 }
